@@ -1,5 +1,6 @@
 package br.com.exemplo.ScrenMatch.principal;
 
+import br.com.exemplo.ScrenMatch.model.DadosEpisodio;
 import br.com.exemplo.ScrenMatch.model.DadosSeries;
 import br.com.exemplo.ScrenMatch.model.DadosTemporadas;
 import br.com.exemplo.ScrenMatch.service.ConsumoAPI;
@@ -35,6 +36,15 @@ public class Principal {
             temporadas.add(dadostemporadas);
         }
         temporadas.forEach(System.out::println);
+
+//        for (int i = 0; i < dados.totalTemporada(); i++) {
+//            List<DadosEpisodio> episodios = temporadas.get(i).dadosEpisodios();
+//            for (int j = 0 ; j < episodios.size(); j++) {
+//                System.out.println(episodios.get(j).Titulo());
+//            }
+//        }
+
+        temporadas.forEach(t -> t.dadosEpisodios().forEach(e -> System.out.println(e.Titulo())));
 
     }
 }
