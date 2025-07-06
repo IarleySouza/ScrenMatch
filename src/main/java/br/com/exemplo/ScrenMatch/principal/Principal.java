@@ -7,9 +7,8 @@ import br.com.exemplo.ScrenMatch.service.ConsumoAPI;
 import br.com.exemplo.ScrenMatch.service.CoverterDados;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -45,6 +44,37 @@ public class Principal {
 //        }
 
         temporadas.forEach(t -> t.dadosEpisodios().forEach(e -> System.out.println(e.Titulo())));
+
+//        List<String> nomes = Arrays.asList("iarley", "Matheus", "jose", "carlinhos", "Aninha");
+//
+//        nomes.stream()
+//                .forEach(name -> System.out.println("olá " + name));
+//        List<Integer> numeros =  Arrays.asList(1, 2, 3, 4, 5);
+//        List<Integer> numeroPares = numeros.stream()
+//                        .filter(n -> n % 2 == 0)
+//                .collect(Collectors.toList());
+//
+//        System.out.println(numeroPares);
+//        nomes.stream()
+//                .sorted()
+//                .limit(3)
+//                .filter(n -> n.startsWith("M")) // Filtra os nomes que começam com "M"
+//                .map(n -> n.toUpperCase()) //Transforma os nomes restantes em caixa alta
+//                .forEach(System.out::println);
+
+
+        List<DadosEpisodio> dadosEpisodios = temporadas.stream()
+                .flatMap(t -> t.dadosEpisodios().stream())
+                .collect(Collectors.toList());
+
+
+        System.out.println("\nTop 5 episodios: ");
+
+        dadosEpisodios.stream()
+                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+                .limit(5)
+                .forEach(System.out::println);
 
     }
 }
