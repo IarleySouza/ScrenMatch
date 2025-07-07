@@ -3,10 +3,13 @@ package br.com.exemplo.ScrenMatch.principal;
 import br.com.exemplo.ScrenMatch.model.DadosEpisodio;
 import br.com.exemplo.ScrenMatch.model.DadosSeries;
 import br.com.exemplo.ScrenMatch.model.DadosTemporadas;
+import br.com.exemplo.ScrenMatch.model.Episodio;
 import br.com.exemplo.ScrenMatch.service.ConsumoAPI;
 import br.com.exemplo.ScrenMatch.service.CoverterDados;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,6 +78,29 @@ public class Principal {
                 .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.dadosEpisodios().stream()
+                        .map(d -> new Episodio(t.numero(), d))
+                ).collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
+
+        System.out.print("\nA partir de que ano você deseja ver os episodios : ");
+        int ano = sc.nextInt();
+        sc.nextLine();
+
+        LocalDate dataBusca = LocalDate.of(ano, 1, 1);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        episodios.stream()
+                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                        " | Episodio: " + e.getTitulo() +
+                        " | Data lançamento: " + e.getDataLancamento().format(formatter)
+                ));
 
     }
 }
