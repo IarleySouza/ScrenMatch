@@ -16,7 +16,7 @@ public class Serie {
     private Integer totalTemporada;
     private Double avaliacao;
     private Categoria genero;
-    private String stores;
+    private String atores;
     private String poster;
     private String sinopse;
 
@@ -25,5 +25,8 @@ public class Serie {
         this.totalTemporada = dadosSeries.totalTemporada();
         this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSeries.avaliacao())).orElse(0);
         this.genero = Categoria.fromString(dadosSeries.genero().split(",")[0].trim());
+        this.atores = dadosSeries.atores();
+        this.poster = dadosSeries.poster();
+        this.sinopse = dadosSeries.sinopse();
     }
 }
