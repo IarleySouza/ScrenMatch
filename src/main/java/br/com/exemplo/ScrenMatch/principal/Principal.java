@@ -8,8 +8,6 @@ import br.com.exemplo.ScrenMatch.service.ConsumoAPI;
 import br.com.exemplo.ScrenMatch.service.CoverterDados;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 

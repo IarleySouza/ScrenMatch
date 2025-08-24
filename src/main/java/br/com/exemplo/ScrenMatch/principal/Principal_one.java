@@ -2,13 +2,16 @@ package br.com.exemplo.ScrenMatch.principal;
 
 import br.com.exemplo.ScrenMatch.model.DadosSeries;
 import br.com.exemplo.ScrenMatch.model.DadosTemporadas;
+import br.com.exemplo.ScrenMatch.model.Serie;
 import br.com.exemplo.ScrenMatch.service.ConsumoAPI;
 import br.com.exemplo.ScrenMatch.service.CoverterDados;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal_one {
 
@@ -57,9 +60,15 @@ public class Principal_one {
     }
 
     private void listarSeriesBuscadas() {
-        dadosSeries.forEach(System.out::println);
-    }
+        List<Serie> series = new ArrayList<>();
+        series = dadosSeries.stream()
+                        .map(d -> new Serie(d))
+                        .collect(Collectors.toList());
 
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
+    }
     private void buscarSerieWeb() throws JsonProcessingException {
         DadosSeries dados = getDadosSerie();
         dadosSeries.add(dados);

@@ -1,9 +1,7 @@
 package br.com.exemplo.ScrenMatch.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import br.com.exemplo.ScrenMatch.service.ConsultaChatGPT;
+import lombok.*;
 
 import java.util.OptionalDouble;
 
@@ -11,6 +9,7 @@ import java.util.OptionalDouble;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Serie {
     private String titulo;
     private Integer totalTemporada;
@@ -27,6 +26,6 @@ public class Serie {
         this.genero = Categoria.fromString(dadosSeries.genero().split(",")[0].trim());
         this.atores = dadosSeries.atores();
         this.poster = dadosSeries.poster();
-        this.sinopse = dadosSeries.sinopse();
+        this.sinopse = ConsultaChatGPT.obterTraducao(dadosSeries.sinopse()).trim();
     }
 }
